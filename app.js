@@ -26,6 +26,5 @@ App({
   },
   globalData:{
     userInfo:null,
-    isG5S: false
   }
 })

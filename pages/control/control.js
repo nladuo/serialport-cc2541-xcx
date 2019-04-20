@@ -1,5 +1,5 @@
 // pages/control/control.js
-import { updateBuffer } from "./data"
+import { char2buf, buf2char} from "./utils.js"
 
 let app = getApp();
 
@@ -10,19 +10,15 @@ Page({
     serviceId: '',          // 服务ID，以FFE0开头
     characteristicId: '',   // 特征ID，以FFE1开头 
     result: '',             // 显示text到界面
-    isG5S: false            // 是否测量甲醛
+    textToSend: ''
   },
 
-  onLoad: function (options) {
+  onLoad (options) {
     let that = this;
     console.log("onLoad");
     console.log('deviceId=' + options.deviceId);
     console.log('name=' + options.name);
     that.setData({deviceId: options.deviceId});
-    // 读传感器类型
-    // let value = wx.getStorageSync('isG5S')
-    console.log('isG5S=' + app.globalData.isG5S);
-    that.setData({ isG5S: app.globalData.isG5S });
     /**
      * 设置NavigationBar的Title
      */
@@ -109,29 +105,17 @@ Page({
                       serviceId: that.data.serviceId,
                       characteristicId: that.data.characteristicId,
                       state: true,
-                      success: function (res) {
+                      success (res) {
                         /**
                          * 监听接受的数据，渲染到界面
                          */
                         wx.onBLECharacteristicValueChange(function (characteristic) {
-                          let x = new Uint8Array(characteristic.value);
-                          let str = ""
-                          for (let i = 0; i < x.length; i++) {
-                            /**
-                             * 更新到Buffer中
-                             */
-                            updateBuffer(x[i], that.data.isG5S, (text)=>{
-                              that.setData({ result: text });
-                            })
-                            let ch = x[i].toString(16)
-                            if (ch.length == 1) {
-                              str += "0" + ch;
-                            } else {
-                              str += ch;
-                            }
-                            str += " ";
-                          }
-                          console.log(str);
+                          // console.log(characteristic.value)
+                          console.log("received--->", buf2char(characteristic.value));
+                          let res = that.data.result += buf2char(characteristic.value);
+                          that.setData({
+                            result: res
+                          })
                         })
                       },
                     })
@@ -140,18 +124,35 @@ Page({
                 },
               })
             }, 3000)
-
           }
         })
       }
     })
-  
+  },
+
+  sendTxtToBle () {
+    console.log(this.data.textToSend);
+    wx.writeBLECharacteristicValue({
+      deviceId: this.data.deviceId,
+      serviceId: this.data.serviceId,
+      characteristicId: this.data.characteristicId,
+      value: char2buf(this.data.textToSend),
+      success: function (res) { 
+        console.log(res);
+      },
+    })
+  },
+
+  bindKeyInput(e) {
+    this.setData({
+      textToSend: e.detail.value
+    })
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
+  onUnload () {
     wx.closeBLEConnection({
       deviceId: this.data.deviceId
     })

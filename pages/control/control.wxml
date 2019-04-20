@@ -1,7 +1,11 @@
 <!--pages/control/control.wxml-->
 <view class='section'>
-  <text class='header'>测量结果：</text>
+  <text class='header'>接收到的数据：</text>
   <view class='result'>
     <text>{{ result }}</text>
+  </view>
+  <view class="section-input">
+    <input bindinput="bindKeyInput"  type="text" placeholder=" 输入数据给蓝牙" />
+    <button bindtap='sendTxtToBle'>发送</button>
   </view>
 </view>

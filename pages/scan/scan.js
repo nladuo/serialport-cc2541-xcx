@@ -58,7 +58,7 @@ Page({
     })
   
   },
-  bindViewTap: function (e) {
+  bindViewTap (e) {
     console.log(e.currentTarget.dataset.title);
     console.log(e.currentTarget.dataset.name);
     console.log(e.currentTarget.dataset.advertisData);

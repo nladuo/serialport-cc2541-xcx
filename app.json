@@ -1,9 +1,7 @@
 {
   "pages":[
-    "pages/index/index",
-    "pages/logs/logs",
-    "pages/scan/scan",
-    "pages/control/control"
+    "pages/control/control",
+    "pages/scan/scan"
   ],
   "window":{
     "backgroundTextStyle":"light",

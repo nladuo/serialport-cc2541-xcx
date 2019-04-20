@@ -1,7 +1,31 @@
 /* pages/control/control.wxss */
 
+page {
+  background-color: #f0f0f0;
+}
+
 .section {
- margin: 5px;
+  margin: 5px;
+}
+
+.section-input {
+  height:10%;
+  padding: 16rpx;
+  display: flex;
+  position: fixed;
+  bottom: 5px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+input {
+  height: 44px;
+  border: 1px solid gray;
+  background: white;
+  border-radius: 10px;
+  width: 75%;
+
+  /* background-color: #f0f0f0; */
 }
 
 .header {
