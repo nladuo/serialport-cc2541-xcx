@@ -41,4 +41,6 @@ input {
 
 .result text {
   font-size: 20px;
+  word-break:break-all;
 }
+

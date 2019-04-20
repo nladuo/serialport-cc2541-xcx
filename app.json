@@ -1,7 +1,7 @@
 {
   "pages":[
-    "pages/control/control",
-    "pages/scan/scan"
+    "pages/scan/scan",
+    "pages/control/control"
   ],
   "window":{
     "backgroundTextStyle":"light",

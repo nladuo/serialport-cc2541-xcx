@@ -9,7 +9,7 @@ Page({
     name: '',               // BLE设备名称
     serviceId: '',          // 服务ID，以FFE0开头
     characteristicId: '',   // 特征ID，以FFE1开头 
-    result: '',             // 显示text到界面
+    result: "\n",             // 显示text到界面
     textToSend: ''
   },
 
